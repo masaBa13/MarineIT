@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="Ja">
+<head>
+  <meta charset="UTF-8">
+  <title>デジタルマグロ電話</title>
+  <style>
+    header {
+        display: flex;
+        align-items: center;
+        background-color: rgb(57, 174, 228);
+        margin-bottom: 20px;
+        padding-left: 42vw;
+        padding-right: 42vw;
+        margin-top: -10px;
+        margin-left: -15px;
+        margin-right: -15px;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+      h1 {
+        color: white;
+        text-align: center;
+      }
+      h2 {
+        color: white;
+        padding: 20px;
+        font-size: small;
+        margin-left: 0px;
+      }
+      .memo-input {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+      }
+      .memo-input label {
+        margin-bottom: 5px;
+      }
+      .system-date-style {
+  color: rgb(54, 54, 54);
+  font-weight: bold;
+  /* 他のスタイルプロパティを追加 */
+}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>未来丸</h1>
+  </header>
+  <div>
+    <!-- 日付入力フィールドを非表示にし、JavaScriptで自動的に取得した時間を表示する -->
+    <p id="systemDate"></p>
+    <div class="memo-input">
+      <label for="under30kg">〜30kg:</label>
+      <input type="number" id="under30kg" placeholder="〜30kg">
+    </div>
+    <div class="memo-input">
+      <label for="30to50kg">30〜50kg:</label>
+      <input type="number" id="30to50kg" placeholder="30〜50kg">
+    </div>
+    <div class="memo-input">
+      <label for="50to100kg">50〜100kg:</label>
+      <input type="number" id="50to100kg" placeholder="50〜100kg">
+    </div>
+    <div class="memo-input">
+      <label for="over100kg">100kg〜:</label>
+      <input type="number" id="over100kg" placeholder="100kg〜">
+    </div>
+    <div class="memo-input">
+      <label for="release">放流:</label>
+      <input type="number" id="release" placeholder="放流">
+    </div>
+    <button onclick="addMemo()">送信</button>
+  </div>
+  <div id="memos">
+    <!-- メモ欄はここに追加されます -->
+  </div>
+
+  <script>
+    function addMemo() {
+      // システムの時間を取得
+      const systemDate = new Date();
+      const selectedDate = systemDate.toLocaleDateString('ja-JP');
+
+      const under30kgInput = document.getElementById('under30kg').value;
+      const thirtyTo50kgInput = document.getElementById('30to50kg').value;
+      const fiftyTo100kgInput = document.getElementById('50to100kg').value;
+      const over100kgInput = document.getElementById('over100kg').value;
+      const releaseInput = document.getElementById('release').value;
+
+      const memoElement = document.createElement('div');
+      memoElement.innerHTML = `
+        <h2>${selectedDate}</h2>
+        <p>〜30kg: ${under30kgInput}</p>
+        <p>30〜50kg: ${thirtyTo50kgInput}</p>
+        <p>50〜100kg: ${fiftyTo100kgInput}</p>
+        <p>100kg〜: ${over100kgInput}</p>
+        <p>放流: ${releaseInput}</p>
+      `;
+
+      const memosContainer = document.getElementById('memos');
+      memosContainer.appendChild(memoElement);
+    }
+
+    // ページが読み込まれたときにシステムの時間を表示
+    window.onload = function() {
+      const systemDate = new Date();
+      const currentDate = systemDate.toLocaleDateString('ja-JP');
+      const systemDateElement = document.getElementById('systemDate');
+      document.getElementById('systemDate').innerText = currentDate;
+      systemDateElement.classList.add('system-date-style'); // クラスを追加
+    };
+  </script>
+</body>
+</html>
